@@ -1,0 +1,81 @@
+doctype html
+html 
+    head 
+        if title
+            title Eazyblog - #{title}
+        else 
+            title Eazyblog
+        link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css')
+        link(rel="stylesheet", href="/virtual-select.min.css")
+        link(rel='stylesheet' href='/style.css')
+        link(rel="stylesheet", href="/select.css")
+        link(rel="stylesheet", href="/tags-input.css")
+        link(rel="stylesheet", href="/bower_components/components-font-awesome/css/all.css")
+    body 
+        nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-primary
+            .container-fluid
+                a.navbar-brand(href='/') Eazyblog
+                form.position-absolute.d-none.d-sm-none.d-md-block.d-lg-block.search(method='POST' action='/search')
+                    .input-group 
+                        input.form-control.form-control-sm(type='text' name='search')
+                        button.btn.btn-primary.btn-sm.border(type='submit') Search
+                button.btn.position-absolute.msearch.d-sm-block.d-xs-block.d-md-none(data-bs-toggle='collapse' data-bs-target='#search')
+                    i.fa-solid.fa-magnifying-glass.text-white
+                button.navbar-toggler(type='button' data-bs-target='#offcanvasScrolling' data-bs-toggle='offcanvas')
+                    span.navbar-toggler-icon
+                .offcanvas.offcanvas-start.border-primary(data-bs-scroll='true' data-bs-backdrop='false' tab-index='-1' id='offcanvasScrolling')
+                    .offcanvas-header 
+                        h5#offcanvasTopLabel Menu 
+                        btn.btn-close.text-reset(data-bs-dismiss='offcanvas' type='button')
+                    .offcanvas-body
+                        ul.navbar-nav
+                            li.nav-item
+                                a.nav-link.text-dark.fw-bold(href='/') Home
+                            li.nav-item
+                                a.nav-link.text-dark.fw-bold.dropdown-toggle#menuCategory(href='/' data-bs-toggle='dropdown') Categories
+                                ul.dropdown-menu(aria-labelledby='menuCategory')
+                                    if category
+                                        each categories in category
+                                            li
+                                                a.dropdown-item.text-capitalize(href='/category/'+categories)= categories
+                            if user
+                                li.nav-item
+                                    a.nav-link.text-dark.fw-bold(href='/posts/add') Add Article
+                            if user
+                                li.nav-item
+                                    a.nav-link.text-dark.fw-bold(href='/admin/dashboard') Dashboard
+                                li.nav-item.logout
+                                    a.nav-link.text-dark.fw-bold(href='/logout') Logout 
+                            else
+                                li.nav-item
+                                    a.nav-link.text-dark.fw-bold(href='/login') Admin
+
+        .container.searchlayout.collapse#search.shadow
+            form(method='POST' action='/search')
+                .input-group
+                    input.form-control.form-control-sm.border-primary(type='text' name='search' required)
+                    button.btn.btn-primary.btn-sm.border(type='submit') Search
+        #{msg}
+        .toast-container
+            != messages('message', locals)
+            if errors
+                each error, i in errors 
+                    .toast.bg-danger.text-white.border.align-items-center.show(role='alert' aria-live='assertive' aria-atomic='true') 
+                        .d-flex
+                            .toast-body #{error.msg}
+                                button.btn-close(type='button' data-bs-dismiss='toast')
+    block content 
+    script(src="/bower_components/bootstrap/dist/js/bootstrap.bundle.min.js")
+    script(src="/virtual-select.min.js") 
+    script(src="/select.js")
+    script(src="/tags-input.js")
+    script(type='application/javascript' src='/tinymce.min.js')
+    script(type='application/javascript' src='/moment.js')
+    script(type='application/javascript' src="/tinymce-config.js") 
+    script(src="/virtual-select.js") 
+    
+    footer 
+        br
+        hr
+        p Copyright &copy; 2023
+    script(src="/main.js")

@@ -1,0 +1,60 @@
+extends layout 
+block content 
+    .container
+        ul.nav.nav-tabs.d-flex.justify-content-center 
+            li.nav-item 
+                a.nav-link(href='/admin/dashboard') Dashboard
+            li.nav-item 
+                a.nav-link(href='./dashboard/my-posts') Posts 
+            if user.role == 'Admin'
+                li.nav-item 
+                    a.nav-link(href='/admin/dashboard/featured-posts') Featured post
+                li.nav-item 
+                    a.nav-link(href='/users') Add users  
+                li.nav-item
+                    a.nav-link Settings
+    .container.form-reg-con.border.border-primary.p-4.rounded.shadow.mt-4
+        h2.text-center Update Profile
+        form(action='/admin/dashboard/update-profile' method='POST' enctype='multipart/form-data') 
+            .d-flex.justify-content-center.mb-4
+                .card(style='max-width:15rem; height:18rem')
+                    .card-header 
+                        label.form-label(label for='file-upload') Update Profile Picture
+                    .card-body.d-flex.justify-content-center 
+                        img.img-fluid(src=user.profile?'/uploads/'+user.profile.filename:''  id='file-display' style='height:9rem')
+                    .card-footer 
+                        input.form-control#file-upload(type='file' name='file' onchange='renderFile()')
+            label.form-label(for='Name') Name
+            input.form-control#name(type='text' name='name' value=user.name)
+            label.form-label(for='username') Username
+            input.form-control#username(type='text' name='username' value=user.username disabled)
+            label.form-label(for='email') Email
+            input.form-control#email(type='email' name='email' value=user.email)
+            label.form-label(for='role') Role 
+            select#role.form-select(name="role" disabled)
+                option(selected)= user.role 
+                option(value = 'Admin') Admin
+                option(value = 'Editor') Editor
+            label.form-label(for='phone-number') Phone Number
+            input.form-control#phone-number(type='number' name='phone' value=user.phone)
+            .row 
+                .col-sm-6
+                    label.form-label(for='Name') Facebook Username
+                    input.form-control#name(type='text' name='facebook' value=value=user.facebook)
+                .col-sm-6
+                    label.form-label(for='Name') Twitter Username
+                    input.form-control#name(type='text' name='twitter' value=user.twitter==undefined?'@':user.twitter)
+            .row 
+                .col-sm-4
+                    label.form-label(for='Name') github Username
+                    input.form-control#name(type='text' name='github' value=user.github==undefined?'@':user.github)
+                .col-sm-4
+                    label.form-label(for='Name') linkedin Username
+                    input.form-control#name(type='text' name='linkedin' value=user.linkedin==undefined?'@':user.linkedin)
+                .col-sm-4
+                    label.form-label(for='Name') Instagram 
+                    input.form-control#name(type='text' name='instagram' value=user.instagram==undefined?'@':user.instagram)
+            label.form-label(for='bio') Bio
+            textarea.form-control#bio(name='bio' col='30' rows='5')= user.bio
+            br
+            button.btn.btn-primary(type='submit') Submit

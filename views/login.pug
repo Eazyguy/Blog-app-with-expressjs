@@ -1,0 +1,12 @@
+extends layout 
+block content 
+    .container-fluid.login-con
+        .container.form-con.border.border-primary.p-4.rounded.shadow.align-items-center
+            h2.text-center Login
+            form(action='/login' method='POST') 
+                label.form-label(for='username') Username
+                input.form-control#username(type='text' name='username')
+                label.form-label(for='password') Password
+                input.form-control#password(type='password' name='password')
+                br
+                button.btn.btn-primary(type='submit') Submit

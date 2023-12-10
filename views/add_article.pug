@@ -1,0 +1,40 @@
+extends layout 
+block content 
+    .container
+        h1 Add Article
+        form#form(action="/posts/add" method='POST' enctype='multipart/form-data')
+            .row
+                .col-md-8.px-4 
+                    label.form-label(for='title') Title
+                    input.form-control.border-default.border-2#title(type='text' name='title')
+                    br
+                    textarea#body.form-control.border-primary(name="body", cols="30", rows="5") 
+                .col-md-4.p-4.mx-auto
+                        label.form-label(for='category') Category
+                        br
+                        select#category.text-capitalize(name='category' data-silent-initial-value='true' multiple)
+                            if category
+                                each categories in category
+                                    option.text-capitalize(value=categories) #{categories}
+                        br
+                        br
+                        .form-check
+                            input.form-check-input.border-3(type='checkbox' id='featured-post' name='featuredPost')
+                            label.form-check-label(for="featured-post" )  Set as Featured Post
+                        br
+                        label.form-label(for='tags') Add Tags
+                        #tagsI.form-control.select.multiple.border-2(data-list='tagsOp' data-mutable)
+                            input#tags(type='text' data-bs-toggle='dropdown')
+                            .dropdown-menu
+                            select(name='tags' multiple hidden)
+                        br
+                        label.form-label.ms-3(for='file-upload') Add featured Image 
+                        .container.border.border-default.border-2.bg-default.w-auto.img-upload.overflow-hidden.d-flex
+                            img.img-fluid(src='' id='file-display')
+                        input.form-control.border-default.border-2#file-upload(type='file' name='file' onchange='renderFile()')
+            button.btn.btn-primary(type='submit') Submit
+    datalist#tagsOp 
+        if user
+            each tag, i in user.tags
+                option(value=tag)= tag
+                        

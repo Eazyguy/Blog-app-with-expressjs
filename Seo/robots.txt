@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+Craw-delay: 5
+Sitemap: http://localhost:3000/sitemap.xml

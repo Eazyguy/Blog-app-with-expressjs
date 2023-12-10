@@ -1,0 +1,61 @@
+extends layout 
+block content 
+    .container
+        ul.nav.nav-tabs.d-flex.justify-content-center 
+            li.nav-item 
+                a.nav-link(href='/admin/dashboard') Dashboard
+            li.nav-item 
+                a.nav-link(href='./my-posts') Posts 
+            if user.role == 'Admin'
+                li.nav-item 
+                    a.nav-link.active(href='/admin/dashboard/featured-posts') Featured post
+                li.nav-item 
+                    a.nav-link(href='/users') Users  
+                li.nav-item 
+                    a.nav-link(href='/admin/dashboard/settings') Settings
+    .container.position-relative.mt-4
+        h1.text-md-center Add Featured Posts
+        if user.role == 'Admin'
+            .dropdown.position-absolute.top-0.my-1#Ffilter.mx-1
+                    button.btn.btn-outline-secondary.dropdown-toggle(type= 'button' id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false')
+                        i.fa-solid.fa-filter
+                    ul.dropdown-menu(aria-labelledby='dropdownMenuButton1')
+                        li 
+                            a.dropdown-item(href='/admin/dashboard/add-featured-posts/mine') My Posts
+                        li 
+                            a.dropdown-item(href='/admin/dashboard/add-featured-posts') All Posts
+        a.btn.btn-outline-primary.position-absolute.top-0.end-0.my-1.mx-4(href='./featured-posts')  Go back
+        each post, i in articles
+            ul.list-group
+                li.list-group-item.float-start= post.title
+                    .btn.btn-success.float-end.addFeatured.mx-1(data-title=post.title)
+                        i.fa-solid.fa-add
+        if pages > 0
+            nav 
+                ul.pagination.justify-content-center.p-5 
+                    if current == 1
+                        li.page-item.disabled
+                            a.page-link First
+                    else 
+                        li.page-item 
+                            a.page-link(href='/admin/dashboard/'+url) First 
+                    - var i = Number(current) > 5 ? Number(current) - 4 : 1
+                    if i !==1
+                        li.page-item.disabled 
+                            a.page-link ...
+                    - for(; i <= (Number(current)+4) && i <= pages; i++)
+                        if i == current 
+                            li.page-item.active 
+                                a.page-link #{i}
+                        else 
+                            li.page-item
+                                a.page-link(href='/admin/dashboard/'+url+'/page-'+i) #{i}
+                        if i == Number(current) + 4 && i < pages 
+                            li.page-item.disabled 
+                                a.page-link ...
+                    if current == pages 
+                        li.page-item.disabled 
+                            a.page-link Last 
+                    else
+                        li.page-item 
+                            a.page-link(href='/admin/dashboard/page-'+pages) Last

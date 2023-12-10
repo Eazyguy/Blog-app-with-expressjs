@@ -1,0 +1,59 @@
+extends layout 
+block content 
+    .container
+        ul.nav.nav-tabs.d-flex.justify-content-center 
+            li.nav-item 
+                a.nav-link.active Dashboard
+            li.nav-item 
+                a.nav-link(href='./dashboard/my-posts') Posts 
+            li.nav-item 
+                a.nav-link(href='/admin/dashboard/featured-posts') Featured post
+            li.nav-item 
+                a.nav-link(href='/users') Users  
+            li.nav-item 
+                a.nav-link(href='/admin/dashboard/settings') Settings
+    .row.mt-3.shadow.border.border-2.border-top-0
+        .col-12.pt-3.d-flex.justify-content-center
+            img.img-thumbnail.rounded-circle.avatar.border.border-2(src=ruser.profile?'/uploads/'+ruser.profile.filename:'/Assets/Israel.jpeg')
+        .text-center.fw-bolder.fs-2 #{ruser.name}
+        .text-center.mb-3 #{ruser.role}
+        hr.border-2
+        .row.d-flex.justify-content-center.mt-3
+            .col-md-3.ms-2
+                img.img-thumbnail.rounded-3.s-icon(src='/Assets/facebook.png')
+                a.text-decoration-none.m-2(href='https://www.facebook.com/'+ruser.facebook target='_blank') 
+                    b #{ruser.facebook}
+            .col-md-2.ms-2
+                img.img-thumbnail.rounded-3.s-icon(src='/Assets/twitter.png')
+                a.text-decoration-none(href=ruser.twitter?'https://www.twitter.com/'+ruser.twitter.slice(1):'' target='_blank') 
+                    b #{ruser.twitter}
+            .col-md-2.ms-2
+                img.img-thumbnail.rounded-3.s-icon(src='/Assets/linkedin.png')
+                a.text-decoration-none.m-2(href=ruser.linkedin?'https://www.linkedin.com/'+ruser.linkedin.slice(1):'' target='_blank') 
+                 b #{ruser.linkedin}
+            .col-md-2.ms-2
+                img.img-thumbnail.rounded-3.s-icon(src='/Assets/instagram.png')
+                a.text-decoration-none.m-2(href='https://www.instagram.com/'+ruser.instagram target='_blank') 
+                 b #{ruser.instagram}
+            .col-md-2.ms-2
+                img.img-thumbnail.rounded-3.s-icon(src='/Assets/git.png')
+                a.text-decoration-none.m-2(href=ruser.github?'https://www.github.com/'+ruser.github.slice(1):'' target='_blank') 
+                 b #{ruser.github}   
+        article.mt-5.border.border-2.mx-5.artbio.rounded.shadow
+            h2.text-center.bio BIO
+            hr
+            p.px-5.pb-5= ruser.bio
+        .row 
+            h2.text-center.mt-4.mb-5 Contact Information
+            .col-md-6.d-flex.justify-content-center.mb-2
+                b.me-1 Phone Number: 
+                span #{ruser.phone}
+            .col-md-6.d-flex.justify-content-center
+                b.me-1 Email Address:  
+                span #{ruser.email}
+        .d-flex.justify-content-center.pt-5
+            .btn.btn-outline-primary 
+                if ruser.role == 'Admin'
+                    a.text-decoration-none(href='/admin/dashboard/update-profile') Update Profile
+                else 
+                    a.text-decoration-none(href='/profile/'+ruser._id+'/edit') Edit Profile

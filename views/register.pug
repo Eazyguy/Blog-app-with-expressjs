@@ -1,0 +1,50 @@
+extends layout 
+block content 
+    .container
+        ul.nav.nav-tabs.d-flex.justify-content-center 
+            li.nav-item 
+                a.nav-link(href='/admin/dashboard') Dashboard
+            li.nav-item 
+                a.nav-link(href='/admin/dashboard/my-posts') Posts 
+            li.nav-item 
+                a.nav-link(href='/admin/dashboard/featured-posts') Featured post
+            li.nav-item 
+                a.nav-link.active(href='/users') Users  
+            li.nav-item
+                a.nav-link(href='/admin/dashboard/settings') Settings
+    .container.mt-2
+        h1 Users
+        .row
+            .col-md-6
+                br
+                each users, i in user
+                    ul.list-group 
+                        li.list-group-item.float-start 
+                            a.text-decoration-none(href='/profile/'+users._id) #{users.name}
+                            span.badge.float-start.me-2(class=users.role == 'Admin'?'bg-danger':'bg-success')= users.role
+                            a.btn.text-secondary.ms-2(href='/profile/'+users._id+'/edit')
+                                i.fa-solid.fa-edit
+                            .btn.btn-danger.float-end.remUser(data-title=users._id)
+                                i.fa-solid.fa-trash
+            .col-md-6
+                .container.form-reg-con.border.border-primary.p-4.rounded.shadow.mt-4
+                    h2.text-center Add New User
+                    form(action='/register' method='POST') 
+                        label.form-label(for='Name') Name
+                        input.form-control#name(type='text' name='name')
+                        label.form-label(for='username') Username
+                        input.form-control#username(type='text' name='username')
+                        label.form-label(for='email') Email
+                        input.form-control#email(type='email' name='email')
+                        label.form-label(for='role') Role 
+                        select#role.form-select(name="role")
+                            option(selected) Admin 
+                            option(value = 2) Editor
+                        label.form-label(for='phone-number') Phone Number
+                        input.form-control#phone-number(type='number' name='phone')
+                        label.form-label(for='password') Password
+                        input.form-control#password(type='password' name='password')
+                        label.form-label(for='passwordConfirm') Confirm Password
+                        input.form-control#passwordConfirm(type='password' name='password2')
+                        br
+                        button.btn.btn-primary(type='submit') Submit

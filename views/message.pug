@@ -1,0 +1,7 @@
+.messages 
+    each type in Object.keys(messages)
+        each message in messages[type]
+            .toast.align-items-center.text-white.show(role='alert' class='bg-'+type)
+                .d-flex 
+                    .toast-body #{message}
+                    button.btn-close(type='button' data-bs-dismiss='toast')

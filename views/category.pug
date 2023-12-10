@@ -1,0 +1,71 @@
+extends layout
+block content
+    .container-fluid
+        h3.ms-3 Posts by #{title}:
+        .row 
+            each article, i in articles
+                each user, i in users
+                    if user._id == article.author
+                        .col-md-5.col-lg-3.mt-4
+                            .card.border-primary.shadow.rounded-0
+                                if article.featured 
+                                        .d-flex.w-100.position-absolute.categoryTag
+                                            each category, i in article.category
+                                                .bg-main.p-1.rounded-1.mx-1
+                                                    a.text-white.text-decoration-none.text-capitalize(href='/category/'+category)= category
+                                else 
+                                        .d-flex.w-100.position-absolute.categoryTag2
+                                            each category, i in article.category
+                                                .bg-main.p-1.rounded-1.mx-1
+                                                    a.text-white.text-decoration-none.text-capitalize(href='/category/'+category)= category
+                                if article.featured
+                                        a.card-link(href='/posts/'+article.title)
+                                            img.card-img-top.rounded-0(src='/uploads/'+article.featured.filename)
+                                            .overlay-card.position-absolute.bg-dark
+                                .card-body
+                                    h5.card-tite
+                                        a.card-link(href='/'+article.title)= article.title.length > 50?article.title.substring(0,50)+'...':article.title 
+                                    small Posted on #{article.created}, by 
+                                        span.mb-2
+                                            b #{user.name}
+                                    if article.featured
+                                        p.card-text.mx-auto.pt-3 !{article.body.substring(0,74)+'...'}
+                                    else 
+                                        p.card-text.mx-auto.pt-5 !{article.body.substring(0,300)+'...'}
+            else 
+                .container.p-5.No-post
+                    p.d-flex.justify-content-center 
+                        span Post not available for this category
+        if pages > 0
+            nav 
+                ul.pagination.justify-content-center.p-5 
+                    if current == 1
+                        li.page-item.disabled
+                            a.page-link First
+                    else 
+                        li.page-item 
+                            a.page-link(href='/'+page+'/'+title) First 
+                    - var i = Number(current) > 5 ? Number(current) - 4 : 1
+                    if i !==1
+                        li.page-item.disabled 
+                            a.page-link ...
+                    - for(; i <= (Number(current)+4) && i <= pages; i++)
+                        if i == current 
+                            li.page-item.active 
+                                a.page-link #{i}
+                        else 
+                            li.page-item
+                                a.page-link(href='/'+page+'/'+title+'/page-'+i) #{i}
+                        if i == Number(current) + 4 && i < pages 
+                            li.page-item.disabled 
+                                a.page-link ...
+                    if current == pages 
+                        li.page-item.disabled 
+                            a.page-link Last 
+                    else
+                        li.page-item 
+                            a.page-link(href='/'+page+'/'+title+'/page-'+pages) Last
+
+
+                    
+                            

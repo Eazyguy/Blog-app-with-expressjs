@@ -1,0 +1,107 @@
+extend layout 
+block content
+    main
+        .row
+            .col-md-7.col-sm-12.col-xs-12.ps-1
+                .container.border.border-primary.border-top-0.border-bottom-0.shadow.p-3.ms-1.me-1.border-end-0
+                    .container.d-flex.justify-content-center
+                        h1.text-center #{posts.title}
+                        if user 
+                            if user.id == posts.author
+                                .btn.text-primary
+                                    a.text-decoration-none.fs-5(a href='/posts/'+posts.title+'/edit')
+                                        i.fa-solid.fa-edit
+                    .text-center
+                        small Posted on #{date},  
+                        small by 
+                            b #{author}, 
+                        if posts.edited
+                            small  Last Edited on 
+                                b #{edited}, 
+                        small Category: 
+                            b.text-capitalize #{posts.category}
+                    br
+                    article
+                        if posts.featured 
+                            figure
+                                img.img-thumbnail.d-block.mx-auto#image(src='/uploads/'+posts.featured.filename)
+                        br
+                        p !{posts.body}
+                        b Tags: 
+                        each tag, i in posts.tags 
+                            span.badge.bg-main
+                                a.text-white.text-decoration-none(href='/tags/'+tag)= tag
+                    .d-sm-block.d-xs-block.d-md-none
+                        .card.mt-5.rounded-0.border-primary#mabout
+                            .card-header.bg-main.text-white.rounded-0 About the Author
+                            .card-body.pt-1
+                                if profileImg
+                                    img.img-thumbnail#profileImg.mx-auto.d-block(src='/uploads/'+profileImg.filename)
+                                else 
+                                    img.img-thumbnail#profileImg.mx-auto.d-block(src='/Assets/profile.png')
+                                p.card-text.pt-4 !{bio.substring(0,150)}...
+                            .card-footer
+                                .d-flex.justify-content-around
+                                    a.text-dark(href='https://www.facebook.com/'+puser.facebook)
+                                        i.fa-brands.fa-facebook
+                                    a.text-dark(href='https://www.twitter.com/'+puser.twitter.slice(1))
+                                        i.fa-brands.fa-twitter
+                                    a.text-dark(href='https://www.linkedin.com/'+puser.linkedin.slice(1))
+                                        i.fa-brands.fa-linkedin
+                                    a.text-dark(href='https://www.instagram.com/'+puser.instagram.slice(1))
+                                        i.fa-brands.fa-instagram
+                                    a.text-dark(href='https://www.github.com/'+puser.github.slice(1))
+                                        i.fa-brands.fa-github
+                        if related == ''
+                        else
+                            .card.border-0.rounded-0.mt-5.d-lg-none.h-auto.mb-4.w-auto
+                                .card-header.bg-main.text-white.rounded-0 Related Posts
+                                ul.list-group.list-group-flush
+                                    each posts, i in related
+                                        li.list-group-item
+                                            a.text-decoration-none.fw-bold(href='/'+posts.title)= posts.title
+                        if recent == ''
+                        else
+                            .card.border-0.rounded-0.d-lg-none.mx-2.mt-0.w-auto
+                                .card-header.bg-main.text-white.rounded-0 Recent Posts
+                                ul.list-group.list-group-flush
+                                    each posts, i in recent
+                                        li.list-group-item
+                                            a.text-decoration-none.fw-bold(href='/'+posts.title)= posts.title
+            .col-md-4.mt-5.d-md-block.d-none.px-0.border.shadow.border-start-0.border-primary.border-top-0.border-bottom-0.sidebar
+                if related == ''
+                else
+                    .card.border-0.rounded-0.mx-2.h-auto.w-auto
+                        .card-header.bg-main.text-white.rounded-0 Related Posts
+                        ul.list-group.list-group-flush
+                            each posts, i in related
+                                li.list-group-item
+                                    a.fw-bold.text-decoration-none(href='/'+posts.title)= posts.title
+                .card.mt-5.rounded-0.border-primary#about
+                    .card-header.bg-main.text-white.rounded-0 About the Author
+                    .card-body.pt-1
+                        if profileImg
+                            img.img-thumbnail#profileImg.mx-auto.d-block(src='/uploads/'+profileImg.filename)
+                        else 
+                            img.img-thumbnail#profileImg.mx-auto.d-block(src='/Assets/profile.png')
+                        p.card-text.pt-4 !{bio}
+                    .card-footer
+                        .d-flex.justify-content-around
+                            a.text-dark(href='https://www.facebook.com/'+puser.facebook)
+                                i.fa-brands.fa-facebook
+                            a.text-dark(href='https://www.twitter.com/'+puser.twitter.slice(1))
+                                i.fa-brands.fa-twitter
+                            a.text-dark(href='https://www.linkedin.com/'+puser.linkedin.slice(1))
+                                i.fa-brands.fa-linkedin
+                            a.text-dark(href='https://www.instagram.com/'+puser.instagram.slice(1))
+                                i.fa-brands.fa-instagram
+                            a.text-dark(href='https://www.github.com/'+puser.github.slice(1))
+                                i.fa-brands.fa-github
+                if recent == ''
+                else
+                    .card.border-0.rounded-0.mx-2.h-auto.mt-5.w-auto
+                        .card-header.bg-main.text-white.rounded-0 Recent Posts
+                        ul.list-group.list-group-flush
+                            each posts, i in recent
+                                li.list-group-item
+                                    a.fw-bold.text-decoration-none(href='/'+posts.title)= posts.title
