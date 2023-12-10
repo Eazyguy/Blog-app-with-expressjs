@@ -1,4 +1,9 @@
+const dotenv = require('dotenv')
+
+dotenv.config({path:'./config/eazyblog.env'})
+
+
 module.exports={
-    database:'mongodb://127.0.0.1:27017/eazyblogdb',
-    secret:'eazy'
+    database:process.env.DATABASE,
+    secret:process.env.SECRET
 }

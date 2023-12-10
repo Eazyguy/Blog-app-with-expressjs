@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app"
+    "start": "cross-env NODE_ENV=production node app",
+    "dev": "cross-env NODE_ENV=development nodemon"
   },
   "keywords": [],
   "author": "",
@@ -15,12 +16,14 @@
     "body-parser": "^1.20.2",
     "bower": "^1.8.14",
     "connect-flash": "^0.1.1",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-messages": "^1.0.1",
     "express-robots-txt": "^1.0.0",
     "express-session": "^1.17.3",
     "express-sitemap-xml": "^3.0.1",
     "express-validator": "^7.0.1",
+    "memorystore": "^1.6.7",
     "method-override": "^3.0.0",
     "moment": "^2.29.4",
     "mongoose": "^8.0.0",
@@ -30,5 +33,8 @@
     "passport-local": "^1.0.0",
     "pug": "^3.0.2",
     "tinymce": "^6.7.3"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

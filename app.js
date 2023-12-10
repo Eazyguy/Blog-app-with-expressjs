@@ -11,6 +11,10 @@ const methodOverride = require('method-override')
 const  expressSitemapXml = require('express-sitemap-xml')
 const getUrlsFromDatabase = require('./Seo/sitemap')
 const robots = require('express-robots-txt')
+const dotenv = require('dotenv')
+const MemoryStore = require('memorystore')(session)
+
+dotenv.config({path:'./config/eazyblog.env'})
 
 const mongoose = require('mongoose')
 
@@ -53,7 +57,11 @@ app.use(express.static(path.join(__dirname,"public")))
 app.use(session({
     secret: 'keyboard cat',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie:{maxAge:86400000},
+    store: new MemoryStore({
+        checkPeriod:86400000
+    })
   }))
 
   //express messages middleware
@@ -66,7 +74,9 @@ app.use(session({
 app.use(flash())
 
 //logger middleware
-app.use(logger('dev'))
+if(process.env.NODE_ENV === 'development'){
+    app.use(logger('dev'))
+}
 
 //tinymce route
 app.use(express.static(path.join(__dirname,'node_modules','tinymce')))
@@ -162,8 +172,9 @@ app.all('*',(req,res)=>{
      })
 })
 
+    const port = process.env.PORT || 3000
 
-app.listen('3000',(err)=>{
+app.listen(port,(err)=>{
     if(err)console.log(err)
-    console.log('connected on port 3000')
+    console.log(`server running in ${process.env.NODE_ENV} mode on port ${process.env.PORT}`)
 })
