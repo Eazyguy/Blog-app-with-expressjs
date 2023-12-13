@@ -1,3 +1,5 @@
 node_modules
 node_modules
 eazyblog.env
+config/eazyblog.env
+config/eazyblog.env
