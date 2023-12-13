@@ -10,7 +10,7 @@ let Settings = require('../models/settings')
 // Settings Page
 router.get('/settings',ensureAuthenticated,async(req,res)=>{
     const category = await Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).lean()
-    const user = await User.findOne({'_id._id':req.user._id})
+    const user = await User.findOne({'_id._id':req.user._id.toString()})
     // read robot.txt file 
     const robo = await fs.readFile('./Seo/robots.txt',{encoding:'utf8'})
     let cat = category.category.toString()
