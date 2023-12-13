@@ -12,7 +12,6 @@ router.post('/search/',(req,res)=>{
     var perPage = 8
     var page = req.params.page || 1
     let query=req.body.search
-    console.log(query)
 
     Article.find({$text:{$search:query}},{score:{$meta:"textScore"}})
     .sort({score:{$meta:"textScore"}})
