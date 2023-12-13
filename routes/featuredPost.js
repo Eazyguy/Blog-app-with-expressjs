@@ -19,9 +19,9 @@ router.get('/featured-posts',ensureAuthenticated, (req,res)=>{
     .sort({date:-1})
     .exec().then((articles)=>{
         Article.countDocuments({featuredPost:'on'}).then((count)=>{
-            User.find({_id:articles.author}).then((users)=>{
+            User.find({'_id._id':articles.author}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('featured_post',{
                 articles:articles,
                 current:page,
@@ -48,15 +48,15 @@ router.get('/my-featured-posts',ensureAuthenticated,(req,res)=>{
     var perPage = 10
     var page = req.params.page || 1
     if(req.user.role == 'Admin'){
-        Article.find({author:req.user._id,featuredPost:'on'})
+        Article.find({author:req.user._id.toString(),featuredPost:'on'})
     .skip((perPage * page)-perPage)
     .limit(perPage)
     .sort({date:-1})
     .exec().then((articles)=>{
-        Article.countDocuments({author:req.user._id,featuredPost:'on'}).then((count)=>{
-            User.find({_id:articles.author}).then((users)=>{
+        Article.countDocuments({author:req.user._id.toString(),featuredPost:'on'}).then((count)=>{
+            User.find({'_id._id':articles.author}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('featured_post',{
                 articles:articles,
                 current:page,
@@ -77,7 +77,7 @@ router.get('/my-featured-posts',ensureAuthenticated,(req,res)=>{
     }
 })
 
-// add posts from all poststo featured post
+// add posts from all posts to featured post
 
 router.get('/add-featured-posts',ensureAuthenticated,(req,res)=>{
     var perPage = 10
@@ -89,14 +89,15 @@ router.get('/add-featured-posts',ensureAuthenticated,(req,res)=>{
     .sort({date:-1})
     .exec().then((articles)=>{
         Article.countDocuments({'featured.fieldname':'file',$or:[{featuredPost:{$exists:false}},{featuredPost:''}]}).then(count=>{
-            User.find({_id:articles.author}).then((users)=>{
+            User.find({'_id._id':articles.author}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('add_featured_post',{
                 articles:articles,
                 current:page,
                 pages:Math.ceil(count/perPage),
                 users:users,
+                url:'add-featured-posts',
                 title:'Add Featured Posts',
                 category:setting.category
             })
@@ -116,20 +117,21 @@ router.get('/add-featured-posts/mine',ensureAuthenticated,(req,res)=>{
     var perPage = 10
     var page = req.params.page || 1
     if(req.user.role == 'Admin'){
-        Article.find({author:req.user._id,'featured.fieldname':'file',$or:[{featuredPost:{$exists:false}},{featuredPost:''}]})
+        Article.find({author:req.user._id.toString(),'featured.fieldname':'file',$or:[{featuredPost:{$exists:false}},{featuredPost:''}]})
     .skip((perPage * page)-perPage)
     .limit(perPage)
     .sort({date:-1})
     .exec().then((articles)=>{
         Article.countDocuments({'featured.fieldname':'file',$or:[{featuredPost:{$exists:false}},{featuredPost:''}]}).then((count)=>{
-            User.find({_id:articles.author}).then((users)=>{
+            User.find({'_id._id':articles.author}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('add_featured_post',{
-                articles:articles.filter((item)=>item.featuredPost === undefined || item.featuredPost === ''),
+                articles:articles,
                 current:page,
                 pages:Math.ceil(count/perPage),
                 users:users,
+                url:'add-featured-posts/mine',
                 title:'Add my posts to featured Posts',
                 category:setting.category
             })
@@ -156,9 +158,9 @@ router.get('/featured-posts/page-:page',ensureAuthenticated, (req,res)=>{
     .sort({date:-1})
     .exec().then((articles)=>{
         Article.countDocuments({featuredPost:'on'}).then((count)=>{
-            User.find({_id:articles.author}).then((users)=>{
+            User.find({'_id._id':articles.author}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('featured_post',{
                 articles:articles,
                 current:page,
@@ -187,15 +189,15 @@ router.get('/my-featured-posts/page-:page',ensureAuthenticated,(req,res)=>{
     var perPage = 10
     var page = req.params.page || 1
     if(req.user.role == 'Admin'){
-        Article.find({author:req.user._id,featuredPost:'on'})
+        Article.find({author:req.user._id.toString(),featuredPost:'on'})
     .skip((perPage * page)-perPage)
     .limit(perPage)
     .sort({date:-1})
     .exec().then((articles)=>{
-        Article.countDocuments({author:req.user._id,featuredPost:'on'}).then((count)=>{
-            User.find({_id:articles.author}).then((users)=>{
+        Article.countDocuments({author:req.user._id.toString(),featuredPost:'on'}).then((count)=>{
+            User.find({'_id._id':articles.author}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('featured_post',{
                 articles:articles,
                 current:page,
@@ -230,9 +232,9 @@ router.get('/add-featured-posts/page-:page',ensureAuthenticated,(req,res)=>{
     .sort({date:-1})
     .exec().then((articles)=>{
         Article.countDocuments({'featured.fieldname':'file',$or:[{featuredPost:{$exists:false}},{featuredPost:''}]}).then((count)=>{
-            User.find({_id:articles.author}).then((users)=>{
+            User.find({'_id._id':articles.author}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('add_featured_post',{
                 articles:articles,
                 current:page,
@@ -261,20 +263,21 @@ router.get('/add-featured-posts/mine/page-:page',ensureAuthenticated,(req,res)=>
     var perPage = 10
     var page = req.params.page || 1
     if(req.user.role == 'Admin'){
-        Article.find({author:req.user._id,'featured.fieldname':'file',$or:[{featuredPost:{$exists:false}},{featuredPost:''}]})
+        Article.find({author:req.user._id.toString(),'featured.fieldname':'file',$or:[{featuredPost:{$exists:false}},{featuredPost:''}]})
     .skip((perPage * page)-perPage)
     .limit(perPage)
     .sort({date:-1})
     .exec().then((articles)=>{
-        Article.countDocuments({author:req.user._id,'featured.fieldname':'file',$or:[{featuredPost:{$exists:false}},{featuredPost:''}]}).then((count)=>{
-            User.find({_id:articles.author}).then((users)=>{
+        Article.countDocuments({author:req.user._id.toString(),'featured.fieldname':'file',$or:[{featuredPost:{$exists:false}},{featuredPost:''}]}).then((count)=>{
+            User.find({'_id._id':articles.author}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('add_featured_post',{
                 articles:articles,
                 current:page,
                 pages:Math.ceil(count/perPage),
                 users:users,
+                url:'add-featured-posts/mine',
                 title:"Add my posts to featured post-page"+page,
                 category:setting.category
             })

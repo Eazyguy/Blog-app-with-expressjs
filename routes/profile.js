@@ -7,8 +7,8 @@ let User = require('../models/user')
 let Settings = require('../models/settings')
 
 router.get('/:id/edit',ensureAuthenticated,(req,res)=>{
-    User.findOne({_id:req.params.id}).then((user)=>{
-        Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+    User.findOne({'_id._id':req.params.id}).then((user)=>{
+        Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
         res.render('edit_profile',{
             user:user,
             title:'Edit '+user.name+' profile',
@@ -36,7 +36,7 @@ router.post('/:id/edit',ensureAuthenticated,upload,(req,res)=>{
     user.profile = req.file
     
     if(req.user.role == 'Admin'){
-        User.updateOne({_id:req.params.id},user).then(()=>{
+        User.updateOne({'_id._id':req.params.id},user).then(()=>{
             res.redirect('/admin/dashboard')
             req.flash('success','Profile Successfully Updated')
         }).catch((err)=>{if(err)console.log(err)})
@@ -48,9 +48,9 @@ router.post('/:id/edit',ensureAuthenticated,upload,(req,res)=>{
 })
 
 router.get('/:id',ensureAuthenticated,(req,res)=>{
-    User.findOne({_id:req.params.id}).then((ruser)=>{
-        if(req.user._id == ruser._id || req.user.role == 'Admin'){
-            Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+    User.findOne({'_id._id':req.params.id}).then((ruser)=>{
+        if(req.user._id.toString() == ruser._id || req.user.role == 'Admin'){
+            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
         res.render('profile',{
             ruser:ruser,
             title:ruser.name,

@@ -9,8 +9,8 @@ let Settings = require('../models/settings')
 
 // Settings Page
 router.get('/settings',ensureAuthenticated,async(req,res)=>{
-    const category = await Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).lean()
-    const user = await User.findOne({_id:req.user._id})
+    const category = await Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).lean()
+    const user = await User.findOne({'_id._id':req.user._id})
     // read robot.txt file 
     const robo = await fs.readFile('./Seo/robots.txt',{encoding:'utf8'})
     let cat = category.category.toString()
@@ -29,7 +29,7 @@ router.get('/settings',ensureAuthenticated,async(req,res)=>{
 router.put('/settings',ensureAuthenticated,(req,res)=>{
     let password = req.body.password
     let password2 = req.body.password2
-User.findOne({_id:req.user._id}).then((user)=>{
+User.findOne({'_id._id':req.user._id.toString()}).then((user)=>{
     bcrypt.compare(password,user.password,(err,isMatch)=>{
         if(err)console.error(err)
 
@@ -49,7 +49,7 @@ User.findOne({_id:req.user._id}).then((user)=>{
                 bcrypt.hash(password,salt,(err,hash)=>{
                     if(err)console.err(err)
                     password=hash
-                    User.updateOne({_id:req.user._id},{password:password}).then(()=>{
+                    User.updateOne({'_id._id':req.user._id.toString()},{password:password}).then(()=>{
                         req.logout((err)=>{
                             if(err) return next(err)
                             req.flash('success','You have successfully changed your password, please login again')
@@ -72,7 +72,7 @@ router.put('/settings-category',ensureAuthenticated,async(req,res)=>{
             req.flash('danger','You need at least one category')
             return res.redirect('/admin/dashboard/settings')
         }else{
-            await Settings.updateOne({_id:'656f89ecca90516a2249ad0a'},{category:query})
+            await Settings.updateOne({'_id._id':'656f89ecca90516a2249ad0a'},{category:query})
             req.flash('success', 'Category sucessfully updated')
             return res.redirect('/admin/dashboard/settings')
         }
@@ -93,7 +93,7 @@ router.put('/settings-tag',ensureAuthenticated,async(req,res)=>{
               req.flash('danger','You need at least one category')
               return res.redirect('/admin/dashboard/settings')
           }else{
-              await User.updateOne({_id:req.user._id},{tags:query})
+              await User.updateOne({'_id._id':req.user._id.toString()},{tags:query})
               req.flash('success', 'Category sucessfully updated')
               return res.redirect('/admin/dashboard/settings')
           }

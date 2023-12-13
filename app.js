@@ -165,7 +165,7 @@ app.use('/',err404)
 
 app.all('*',(req,res)=>{
      // fetch category from settings
-     Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+     Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
     res.status(404).render('error/404',{
         category:setting.category
     })

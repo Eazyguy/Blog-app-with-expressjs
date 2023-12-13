@@ -28,11 +28,11 @@ User.findOne({username:username}).then((user)=>{
 }))
 
 passport.serializeUser((user,done)=>{
-    done(null,user.id)
+    done(null,user._id)
 })
 
 passport.deserializeUser((id,done)=>{
-    User.findById(id).then((user)=>{
+    User.findOne({'_id._id':id}).then((user)=>{
         done(null,user)
     }).catch(()=>done(null,false))
 })

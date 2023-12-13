@@ -21,8 +21,8 @@ router.post('/search/',(req,res)=>{
     .then((result)=>{
         const author = result.map((item)=>item.author)
     Article.countDocuments({$text:{$search:query}}).then(count=>{
-    User.find({'_id':{$in:author}}).then((users)=>{
-        Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+    User.find({'_id._id':{$in:author}}).then((users)=>{
+        Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
         res.render('category',{
             articles:result,
             users:users,
@@ -61,8 +61,8 @@ router.get('/search/:title',(req,res)=>{
         const author = result.map((item)=>item.author)
     Article.countDocuments({$text:{$search:fin}}).then(count=>{
         console.log(count)
-    User.find({'_id':{$in:author}}).then((users)=>{
-        Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+    User.find({'_id._id':{$in:author}}).then((users)=>{
+        Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
         res.render('category',{
             articles:result,
             users:users,
@@ -103,8 +103,8 @@ router.get('/search/:title/page-:page',(req,res)=>{
         const author = result.map((item)=>item.author)
     Article.countDocuments({$text:{$search:fin}}).then(count=>{
         console.log(count)
-    User.find({'_id':{$in:author}}).then((users)=>{
-        Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+    User.find({'_id._id':{$in:author}}).then((users)=>{
+        Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
         res.render('category',{
             articles:result,
             users:users,

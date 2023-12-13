@@ -8,12 +8,12 @@ let User = require('../models/user')
 let Settings = require('../models/settings')
 
 router.get('/dashboard',ensureAuthenticated,(req,res)=>{
-    User.findOne({_id:req.user._id}).then((userss)=>{
+    User.findOne({'_id._id':req.user._id.toString()}).then((userss)=>{
          // fetch category from settings
-         Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+         Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
         res.render('dashboard',{
             userss:userss,
-            title:userss.role+' '+'Dashboard',
+          //  title:userss.role+' '+'Dashboard',
             category:setting.category
         })
     })
@@ -28,14 +28,14 @@ router.get('/dashboard',ensureAuthenticated,(req,res)=>{
 router.get('/dashboard/my-posts',ensureAuthenticated,(req,res)=>{
     var perPage = 10
     var page = req.params.page || 1
-    Article.find({author:req.user._id})
+    Article.find({author:req.user._id.toString()})
     .skip((perPage * page)-perPage)
     .limit(perPage)
     .sort({createdAt:-1})
     .exec().then((articles)=>{
          // fetch category from settings
-         Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
-        Article.countDocuments({author:req.user._id}).then((count)=>{
+         Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+        Article.countDocuments({author:req.user._id.toString()}).then((count)=>{
             User.find({}).then((users)=>{
             res.render('post_list',{
                 articles:articles,
@@ -66,9 +66,9 @@ if(req.user.role == 'Admin'){
     .exec().then(async (articles)=>{
          Article.countDocuments().then((count)=>{
          const author = articles.map((item)=>item.author)
-            User.find({'_id':{$in:author}}).then((users)=>{
+            User.find({'_id._id':{$in:author}}).then((users)=>{
                  // fetch category from settings
-            Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('post_list',{
                 articles:articles,
                 current:page,
@@ -105,7 +105,7 @@ router.post('/dashboard/update-profile',ensureAuthenticated,upload,(req,res)=>{
     user.bio = req.body.bio
     user.profile = req.file
 
-    User.updateOne({_id:req.user._id},user).then(()=>{
+    User.updateOne({'_id._id':req.user._id.toString()},user).then(()=>{
         res.redirect('/admin/dashboard')
         req.flash('success','Profile Successfully Updated')
     }).catch((err)=>{if(err)console.log(err)})
@@ -113,9 +113,9 @@ router.post('/dashboard/update-profile',ensureAuthenticated,upload,(req,res)=>{
 })
 
 router.get('/dashboard/update-profile',ensureAuthenticated,(req,res)=>{
-    User.findOne({_id:req.user._id}).then((user)=>{
+    User.findOne({'_id._id':req.user._id.toString()}).then((user)=>{
      // fetch category from settings
-     Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+     Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
         res.render('update_profile',{
             user:user,
             title:'Profile update',
@@ -140,11 +140,10 @@ if(req.user.role == 'Admin'){
     .sort({createdAt:-1})
     .exec().then((articles)=>{
          // fetch category from settings
-         Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+         Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
         Article.countDocuments().then((count)=>{
             const author = articles.map((item)=>item.author)
-            User.find({'_id':{$in:author}}).then((users)=>{
-                console.log(users)
+            User.find({'_id._id':{$in:author}}).then((users)=>{
             res.render('post_list',{
                 articles:articles,
                 current:page,
@@ -170,15 +169,15 @@ if(req.user.role == 'Admin'){
 router.get('/dashboard/my-posts/page-:page',ensureAuthenticated,(req,res)=>{
     var perPage = 10
     var page = req.params.page || 1
-    Article.find({author:req.user._id})
+    Article.find({author:req.user._id.toString()})
     .skip((perPage * page)-perPage)
     .limit(perPage)
     .sort({createdAt:-1})
     .exec().then((articles)=>{
          // fetch category from settings
-        Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
-        Article.countDocuments({author:req.user._id}).then((count)=>{
-            User.find({_id:req.user._id}).then((users)=>{
+        Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+        Article.countDocuments({author:req.user._id.toString()}).then((count)=>{
+            User.find({'_id._id':req.user._id.toString()}).then((users)=>{
             res.render('post_list',{
                 articles:articles,
                 current:page,

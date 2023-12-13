@@ -13,6 +13,8 @@ router.get('/',(req,res)=>{
     var perPage = 8
     var page = req.params.page || 1
 
+
+
     Article.find({})
     .skip((perPage * page)-perPage)
     .limit(perPage)
@@ -43,9 +45,9 @@ router.get('/',(req,res)=>{
                 .sort({createdAt:-1})
                 .then((featuredCat4)=>{
             // find authors of each article
-            User.find({'_id':{$in:author}}).then((users)=>{
+            User.find({'_id._id':{$in:author}}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({"_id._id":"656f89ecca90516a2249ad0a"}).then((setting)=>{
             res.render('index',{
                 articles:articles,
                 current:page,
@@ -67,9 +69,9 @@ router.get('/',(req,res)=>{
     })
 })
         })
-    }).catch(()=>{
+    })/*.catch(()=>{
         res.render('error/404')
-    })
+    })*/
 }) 
 
 // view Post
@@ -82,9 +84,9 @@ router.get('/:title',(req,res)=>{
         .exec()
         .then((related)=>{
             Article.find().limit(6).then(recent=>{
-            User.findById(posts.author).then((puser)=>{
+            User.findOne({'_id._id':posts.author}).then((puser)=>{
                  // fetch category from settings
-            Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
                 res.render('posts',{
                     posts:posts,
                     author:puser.name,

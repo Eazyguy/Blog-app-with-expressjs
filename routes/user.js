@@ -13,7 +13,7 @@ let Settings = require('../models/settings')
 //login
 router.get('/login',ensureGuest,(req,res)=>{
      // fetch category from settings
-     Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+     Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
     res.render('login',{
         title:'Login',
         category:setting.category
@@ -33,7 +33,7 @@ router.post('/login',(req,res,next)=>{
     router.get('/users',ensureAuthenticated,(req,res)=>{
         User.find({}).then((user)=>{
          // fetch category from settings
-         Settings.findOne({_id:'656f89ecca90516a2249ad0a'}).then((setting)=>{
+         Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             if(req.user.role == 'Admin'){
                 res.render('register',{
                     user:user,
