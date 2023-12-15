@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const flash = require('connect-flash')
 const config = require('./config/database')
+const MongoStore = require('connect-mongo')
 const passport = require('passport')
 const logger = require('morgan')
 const methodOverride = require('method-override')
@@ -12,7 +13,7 @@ const  expressSitemapXml = require('express-sitemap-xml')
 const getUrlsFromDatabase = require('./Seo/sitemap')
 const robots = require('express-robots-txt')
 const dotenv = require('dotenv')
-const MemoryStore = require('memorystore')(session)
+
 
 dotenv.config({path:'./config/eazyblog.env'})
 
@@ -59,9 +60,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     cookie:{maxAge:86400000},
-    store: new MemoryStore({
-        checkPeriod:86400000
-    })
+    store: MongoStore.create({mongoUrl:process.env.DATABASE})
   }))
 
   //express messages middleware
