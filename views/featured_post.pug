@@ -27,7 +27,7 @@ block content
         a.btn.btn-success.position-absolute.top-0.end-0.my-1.mx-4.mb-1(href='/admin/dashboard/add-featured-posts')
             i.fa-solid.fa-add
         each post, i in articles
-            ul.list-group
+            ul.list-group.mt-1
                 li.list-group-item.float-start= post.title
                     .btn.btn-danger.float-end.removeFilter.mx-1(data-title=post.title)
                         i.fa-solid.fa-trash
