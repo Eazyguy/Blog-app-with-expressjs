@@ -16,7 +16,7 @@ block content
     .container.position-relative.mt-4
         h1.text-md-center Featured Post
         if user.role == 'Admin'
-            .dropdown.position-absolute.top-0.my-1#filter.mx-1.mb-1
+            .dropdown.position-absolute.top-0.my-1#filter.mx-1
                     button.btn.btn-outline-secondary.dropdown-toggle(type= 'button' id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false')
                         i.fa-solid.fa-filter
                     ul.dropdown-menu(aria-labelledby='dropdownMenuButton1')
@@ -24,10 +24,10 @@ block content
                             a.dropdown-item(href='/admin/dashboard/my-featured-posts') My Posts
                         li 
                             a.dropdown-item(href='/admin/dashboard/featured-posts') All Posts
-        a.btn.btn-success.position-absolute.top-0.end-0.my-1.mx-4.mb-1(href='/admin/dashboard/add-featured-posts')
+        a.btn.btn-success.position-absolute.top-0.end-0.my-1.mx-4(href='/admin/dashboard/add-featured-posts')
             i.fa-solid.fa-add
         each post, i in articles
-            ul.list-group.mt-1
+            ul.list-group
                 li.list-group-item.float-start= post.title
                     .btn.btn-danger.float-end.removeFilter.mx-1(data-title=post.title)
                         i.fa-solid.fa-trash

@@ -81,7 +81,8 @@ margin-left: 40%;
     height:180px
 }
 #filter{
-    right:3.9rem
+    right:3.9rem;
+    bottom: 5rem;
 }
 #Ffilter{
     right:7rem
