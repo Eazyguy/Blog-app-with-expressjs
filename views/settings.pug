@@ -20,11 +20,11 @@ block content
                 form(method='POST' action='/admin/dashboard/settings')
                     input(type='hidden' name='_method' value='PUT')
                     label.form-label(for='password') New Password
-                    input.form-control.border-2(type='password' id='password' name='password')
+                    input.form-control.border-2(type='password' id='password' name='password' disabled)
                     label.form-label(for='password2') Confirm New Password
-                    input.form-control.border-2(type='password' id='password' name='password2')
+                    input.form-control.border-2(type='password' id='password' name='password2' disabled)
                     br
-                    button.btn.btn-primary(type='submit') Submit
+                    button.btn.btn-primary(type='submit'disabled) Submit
             if user.role == 'Admin'
                 .container.border.shadow.p-4.form-con-set.mt-3.mb-3
                     h3.text-center Seo
@@ -45,11 +45,13 @@ block content
                     h3.text-center Add or Remove Categories
                     form(method='POST' action='/admin/dashboard/settings-category')
                         input(type='hidden' name='_method' value='PUT')
-                        input#categoryTag.form-control(name='category' value=category)
+                        input#categoryTag.form-control(name='category' value=category disabled)
                         button.btn.btn-primary.px-4.mt-2(type='submit') Save
             .container.border.shadow.p-4.form-cat.mt-3
                 h3.text-center Add or Remove Tags
                 form(method='POST' action='/admin/dashboard/settings-tag')
                     input(type='hidden' name='_method' value='PUT')
-                    input#tagTag.form-control(name='tags' value=tags)
-                    button.btn.btn-primary.px-4.mt-2(type='submit') Save
+                    input#tagTag.form-control(name='tags' value=tags disabled)
+                    button.btn.btn-primary.px-4.mt-2.btn-disabled(type='submit' disabled) Save
+
+                    em The featured for password disable was deactivated to prevent unauthorized access

@@ -35,7 +35,7 @@ block content
                             button.btn
                                 a.text-decoration-none.text-secondary(href='/../posts/'+post.title+'/edit')
                                     i.fa-solid.fa-edit
-                            form.float-end.delete.mx-1(action='/posts/'+post.title method='POST' id='delete')
+                            form.float-end.delete.mx-1(action='/posts/'+post.title method='POST' id='delete' disabled)
                                 input(type='hidden' name='_method' value='DELETE')
                                 button.btn.btn-outline-danger(data-title=post.title)
                                     i.fa-solid.fa-trash
@@ -73,3 +73,5 @@ block content
                     else
                         li.page-item 
                             a.page-link(href='/admin/dashboard/'+url+'/page-'+pages) Last
+
+                             em Some feature is disabled to prevent authorized access

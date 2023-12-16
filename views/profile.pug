@@ -56,4 +56,6 @@ block content
                 if ruser.role == 'Admin'
                     a.text-decoration-none(href='/admin/dashboard/update-profile') Update Profile
                 else 
-                    a.text-decoration-none(href='/profile/'+ruser._id+'/edit') Edit Profile
+                    a.text-decoration-none(href='/profile/'+ruser._id+'/edit' disabled) Edit Profile
+
+                     em Some feature is disabled to prevent authorized access

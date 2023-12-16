@@ -23,13 +23,13 @@ block content
                     .card-body.d-flex.justify-content-center 
                         img.img-fluid(src=user.profile?'/uploads/'+user.profile.filename:''  id='file-display' style='height:9rem')
                     .card-footer 
-                        input.form-control#file-upload(type='file' name='file' onchange='renderFile()')
+                        input.form-control#file-upload(type='file' name='file' onchange='renderFile()' disabled)
             label.form-label(for='Name') Name
-            input.form-control#name(type='text' name='name' value=user.name)
+            input.form-control#name(type='text' name='name' value=user.name disabled)
             label.form-label(for='username') Username
             input.form-control#username(type='text' name='username' value=user.username disabled)
             label.form-label(for='email') Email
-            input.form-control#email(type='email' name='email' value=user.email)
+            input.form-control#email(type='email' name='email' value=user.email disabled)
             label.form-label(for='role') Role 
             select#role.form-select(name="role" disabled)
                 option(selected)= user.role 
@@ -40,21 +40,23 @@ block content
             .row 
                 .col-sm-6
                     label.form-label(for='Name') Facebook Username
-                    input.form-control#name(type='text' name='facebook' value=value=user.facebook)
+                    input.form-control#name(type='text' name='facebook' value=value=user.facebook disabled)
                 .col-sm-6
                     label.form-label(for='Name') Twitter Username
-                    input.form-control#name(type='text' name='twitter' value=user.twitter==undefined?'@':user.twitter)
+                    input.form-control#name(type='text' name='twitter' value=user.twitter==undefined?'@':user.twitter disabled)
             .row 
                 .col-sm-4
                     label.form-label(for='Name') github Username
-                    input.form-control#name(type='text' name='github' value=user.github==undefined?'@':user.github)
+                    input.form-control#name(type='text' name='github' value=user.github==undefined?'@':user.github disabled)
                 .col-sm-4
                     label.form-label(for='Name') linkedin Username
-                    input.form-control#name(type='text' name='linkedin' value=user.linkedin==undefined?'@':user.linkedin)
+                    input.form-control#name(type='text' name='linkedin' value=user.linkedin==undefined?'@':user.linkedin disabled)
                 .col-sm-4
                     label.form-label(for='Name') Instagram 
                     input.form-control#name(type='text' name='instagram' value=user.instagram==undefined?'@':user.instagram)
-            label.form-label(for='bio') Bio
-            textarea.form-control#bio(name='bio' col='30' rows='5')= user.bio
+            label.form-label(for='bio' disabled) Bio
+            textarea.form-control#bio(name='bio' col='30' rows='5' disabled)= user.bio
             br
-            button.btn.btn-primary(type='submit') Submit
+            button.btn.btn-primary(type='submit' disabled) Submit
+
+            em This featured is disabled to prevent authorized access
