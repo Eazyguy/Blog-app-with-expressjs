@@ -26,7 +26,7 @@ router.get('/settings',ensureAuthenticated,async(req,res)=>{
 
 // Change Password
 
-/*router.put('/settings',ensureAuthenticated,(req,res)=>{
+router.put('/settings',ensureAuthenticated,(req,res)=>{
     let password = req.body.password
     let password2 = req.body.password2
 User.findOne({'_id._id':req.user._id.toString()}).then((user)=>{
@@ -61,7 +61,7 @@ User.findOne({'_id._id':req.user._id.toString()}).then((user)=>{
         }
     })
 })
-    })*/
+    })
 
     // Add or Remove categories 
 

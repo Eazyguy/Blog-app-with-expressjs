@@ -20,11 +20,11 @@ block content
                 form(method='POST' action='/admin/dashboard/settings')
                     input(type='hidden' name='_method' value='PUT')
                     label.form-label(for='password') New Password
-                    input.form-control.border-2(type='password' id='password' name='password' disabled)
+                    input.form-control.border-2(type='password' id='password' name='password')
                     label.form-label(for='password2') Confirm New Password
-                    input.form-control.border-2(type='password' id='password' name='password2' disabled)
+                    input.form-control.border-2(type='password' id='password' name='password2')
                     br
-                    button.btn.btn-primary(type='submit'disabled) Submit
+                    button.btn.btn-primary(type='submit') Submit
             if user.role == 'Admin'
                 .container.border.shadow.p-4.form-con-set.mt-3.mb-3
                     h3.text-center Seo
@@ -53,5 +53,5 @@ block content
                     input(type='hidden' name='_method' value='PUT')
                     input#tagTag.form-control(name='tags' value=tags disabled)
                     button.btn.btn-primary.px-4.mt-2.btn-disabled(type='submit' disabled) Save
-
+                    br
                     em The featured for password disable was deactivated to prevent unauthorized access
