@@ -19,10 +19,10 @@ block content
                 h3.text-center Change Password
                 form(method='POST' action='/admin/dashboard/settings')
                     input(type='hidden' name='_method' value='PUT')
-                    label.form-label(for='password' disabled) New Password
-                    input.form-control.border-2(type='password' id='password' name='password')
+                    label.form-label(for='password') New Password
+                    input.form-control.border-2(type='password' id='password' name='password' disabled)
                     label.form-label(for='password2' disabled) Confirm New Password
-                    input.form-control.border-2(type='password' id='password' name='password2')
+                    input.form-control.border-2(type='password' id='password' name='password2' disabled)
                     br
                     button.btn.btn-primary(type='submit' disabled) Submit
             if user.role == 'Admin'

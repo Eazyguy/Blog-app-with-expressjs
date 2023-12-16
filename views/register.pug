@@ -22,9 +22,9 @@ block content
                         li.list-group-item.float-start 
                             a.text-decoration-none(href='/profile/'+users._id) #{users.name}
                             span.badge.float-start.me-2(class=users.role == 'Admin'?'bg-danger':'bg-success')= users.role
-                            a.btn.text-secondary.ms-2(href='/profile/'+users._id+'/edit' disabled)
+                            a.btn.text-secondary.ms-2(href='/profile/'+users._id+'/edit')
                                 i.fa-solid.fa-edit
-                            .btn.btn-danger.float-end.remUser(data-title=users._id disabled)
+                            button.btn.btn-danger.float-end.remUser(data-title=users._id disabled)
                                 i.fa-solid.fa-trash
             .col-md-6
                 .container.form-reg-con.border.border-primary.p-4.rounded.shadow.mt-4

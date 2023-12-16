@@ -37,7 +37,7 @@ block content
                                     i.fa-solid.fa-edit
                             form.float-end.delete.mx-1(action='/posts/'+post.title method='POST' id='delete' disabled)
                                 input(type='hidden' name='_method' value='DELETE')
-                                button.btn.btn-outline-danger(data-title=post.title)
+                                button.btn.btn-outline-danger(data-title=post.title disabled)
                                     i.fa-solid.fa-trash
                             br 
                             small.text-capitalize by #{user.name}, 
@@ -73,5 +73,5 @@ block content
                     else
                         li.page-item 
                             a.page-link(href='/admin/dashboard/'+url+'/page-'+pages) Last
-                            br
-                             em Some feature is disabled to prevent authorized access
+        br
+        em Some feature is disabled to prevent authorized access
