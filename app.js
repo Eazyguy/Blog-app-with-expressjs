@@ -110,6 +110,7 @@ app.get('*',(req,res,next)=>{
     next()
 })
 
+// sitemap 
 async function getUrls(){
     return await getUrlsFromDatabase()
 }
