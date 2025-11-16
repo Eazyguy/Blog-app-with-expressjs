@@ -58,7 +58,7 @@ router.get('/',(req,res)=>{
                 featuredCat2:featuredCat2,
                 featuredCat3:featuredCat3,
                 featuredCat4:featuredCat4,
-                category:setting.category,
+                //category:setting.category,
                 title:'Home of latest Updates'
             })
         })
