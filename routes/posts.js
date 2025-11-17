@@ -60,11 +60,15 @@ router.post('/add',ensureAuthenticated,upload,validation,(req,res)=>{
     article.save().then(()=>{
         
         User.findOne({'_id':req.user._id.toString()}).then((user)=>{
+            if (article.tags){
             const filTags = article.tags.filter((item)=>!user.tags.includes(item))
             const newTags = user.tags.concat(filTags)
             User.updateOne(user,{tags:newTags}).then(()=>{
                 res.redirect('/admin/dashboard/my-posts')
             })
+            }
+            
+            
  })  
 }).catch((err)=>{
     if(err)console.log(err)
@@ -138,21 +142,9 @@ router.delete('/:title',async(req,res)=>{
     }
 
 Article.findOne(req.params).then((posts)=>{
-    if(posts.author !== req.user._id){
+    if(posts.author !== req.user._id && req.user.role !== 'Admin'){
+        console.log(req.user.role !== 'Admin')
         res.status(500).send()
-    }else if(req.user.role !== 'Admin'){
-            if(posts.featured){
-                fs.unlink(posts.featured.destination+posts.featured.filename,(err)=>{
-                   if(err) throw err
-               })
-           }
-           Article.deleteOne(req.params).then(()=>{
-                alert('Post successfully Deleted')
-               res.redirect('/admin/dashboard/my-posts' )
-           }).catch((err)=>{
-               if(err)console.log(err)
-           })
-        
     }else{
             if(posts.featured){
                 fs.unlink(posts.featured.destination+posts.featured.filename,(err)=>{
