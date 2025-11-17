@@ -12,7 +12,7 @@ User.findOne({username:username}).then((user)=>{
         return done(null,false,{message:'No user found'})
     }
 
-
+    console.log(user.password)
     bcrypt.compare(password,user.password,(err,isMatch)=>{
         if(err)throw err
         if(isMatch){
@@ -32,7 +32,7 @@ passport.serializeUser((user,done)=>{
 })
 
 passport.deserializeUser((id,done)=>{
-    User.findOne({'_id._id':id}).then((user)=>{
+    User.findOne({'_id':id}).then((user)=>{
         done(null,user)
     }).catch(()=>done(null,false))
 })

@@ -20,7 +20,7 @@ router.get('/',(req,res)=>{
     .limit(perPage)
     .sort({createdAt:-1})
     .exec().then((articles)=>{
-        Article.countDocuments().then((count)=>{
+               Article.countDocuments().then((count)=>{
             const author = articles.map((item)=>item.author)
             // featured post slide
             Article.find({featuredPost:'on'}).limit(5).sort({createdAt:-1}).then((featured)=>{
@@ -45,9 +45,9 @@ router.get('/',(req,res)=>{
                 .sort({createdAt:-1})
                 .then((featuredCat4)=>{
             // find authors of each article
-            User.find({'_id._id':{$in:author}}).then((users)=>{
+            User.find({'_id':{$in:author}}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({"_id._id":"656f89ecca90516a2249ad0a"}).then((setting)=>{
+            Settings.findOne({"_id":"656f89ecca90516a2249ad0a"}).then((setting)=>{
             res.render('index',{
                 articles:articles,
                 current:page,
@@ -58,7 +58,7 @@ router.get('/',(req,res)=>{
                 featuredCat2:featuredCat2,
                 featuredCat3:featuredCat3,
                 featuredCat4:featuredCat4,
-                //category:setting.category,
+                category:setting.category,
                 title:'Home of latest Updates'
             })
         })
@@ -84,9 +84,9 @@ router.get('/:title',(req,res)=>{
         .exec()
         .then((related)=>{
             Article.find().limit(6).then(recent=>{
-            User.findOne({'_id._id':posts.author}).then((puser)=>{
+            User.findOne({'_id':posts.author}).then((puser)=>{
                  // fetch category from settings
-            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
                 res.render('posts',{
                     posts:posts,
                     author:puser.name,

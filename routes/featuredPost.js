@@ -19,9 +19,9 @@ router.get('/featured-posts',ensureAuthenticated, (req,res)=>{
     .sort({date:-1})
     .exec().then((articles)=>{
         Article.countDocuments({featuredPost:'on'}).then((count)=>{
-            User.find({'_id._id':articles.author}).then((users)=>{
+            User.find({'_id':articles.author}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('featured_post',{
                 articles:articles,
                 current:page,
@@ -54,7 +54,7 @@ router.get('/my-featured-posts',ensureAuthenticated,(req,res)=>{
     .sort({date:-1})
     .exec().then((articles)=>{
         Article.countDocuments({author:req.user._id.toString(),featuredPost:'on'}).then((count)=>{
-            User.find({'_id._id':articles.author}).then((users)=>{
+            User.find({'_id':articles.author}).then((users)=>{
             // fetch category from settings
             Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('featured_post',{
@@ -89,7 +89,7 @@ router.get('/add-featured-posts',ensureAuthenticated,(req,res)=>{
     .sort({date:-1})
     .exec().then((articles)=>{
         Article.countDocuments({'featured.fieldname':'file',$or:[{featuredPost:{$exists:false}},{featuredPost:''}]}).then(count=>{
-            User.find({'_id._id':articles.author}).then((users)=>{
+            User.find({'_id':articles.author}).then((users)=>{
             // fetch category from settings
             Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('add_featured_post',{
@@ -123,9 +123,9 @@ router.get('/add-featured-posts/mine',ensureAuthenticated,(req,res)=>{
     .sort({date:-1})
     .exec().then((articles)=>{
         Article.countDocuments({'featured.fieldname':'file',$or:[{featuredPost:{$exists:false}},{featuredPost:''}]}).then((count)=>{
-            User.find({'_id._id':articles.author}).then((users)=>{
+            User.find({'_id':articles.author}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('add_featured_post',{
                 articles:articles,
                 current:page,
@@ -158,9 +158,9 @@ router.get('/featured-posts/page-:page',ensureAuthenticated, (req,res)=>{
     .sort({date:-1})
     .exec().then((articles)=>{
         Article.countDocuments({featuredPost:'on'}).then((count)=>{
-            User.find({'_id._id':articles.author}).then((users)=>{
+            User.find({'_id':articles.author}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('featured_post',{
                 articles:articles,
                 current:page,
@@ -195,9 +195,9 @@ router.get('/my-featured-posts/page-:page',ensureAuthenticated,(req,res)=>{
     .sort({date:-1})
     .exec().then((articles)=>{
         Article.countDocuments({author:req.user._id.toString(),featuredPost:'on'}).then((count)=>{
-            User.find({'_id._id':articles.author}).then((users)=>{
+            User.find({'_id':articles.author}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('featured_post',{
                 articles:articles,
                 current:page,
@@ -232,9 +232,9 @@ router.get('/add-featured-posts/page-:page',ensureAuthenticated,(req,res)=>{
     .sort({date:-1})
     .exec().then((articles)=>{
         Article.countDocuments({'featured.fieldname':'file',$or:[{featuredPost:{$exists:false}},{featuredPost:''}]}).then((count)=>{
-            User.find({'_id._id':articles.author}).then((users)=>{
+            User.find({'_id':articles.author}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('add_featured_post',{
                 articles:articles,
                 current:page,
@@ -269,9 +269,9 @@ router.get('/add-featured-posts/mine/page-:page',ensureAuthenticated,(req,res)=>
     .sort({date:-1})
     .exec().then((articles)=>{
         Article.countDocuments({author:req.user._id.toString(),'featured.fieldname':'file',$or:[{featuredPost:{$exists:false}},{featuredPost:''}]}).then((count)=>{
-            User.find({'_id._id':articles.author}).then((users)=>{
+            User.find({'_id':articles.author}).then((users)=>{
             // fetch category from settings
-            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('add_featured_post',{
                 articles:articles,
                 current:page,

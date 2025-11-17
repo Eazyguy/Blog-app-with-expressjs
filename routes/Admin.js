@@ -8,9 +8,9 @@ let User = require('../models/user')
 let Settings = require('../models/settings')
 
 router.get('/dashboard',ensureAuthenticated,(req,res)=>{
-    User.findOne({'_id._id':req.user._id.toString()}).then((userss)=>{
+    User.findOne({'_id':req.user._id.toString()}).then((userss)=>{
          // fetch category from settings
-         Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+         Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
         res.render('dashboard',{
             userss:userss,
           //  title:userss.role+' '+'Dashboard',
@@ -34,7 +34,7 @@ router.get('/dashboard/my-posts',ensureAuthenticated,(req,res)=>{
     .sort({createdAt:-1})
     .exec().then((articles)=>{
          // fetch category from settings
-         Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+         Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
         Article.countDocuments({author:req.user._id.toString()}).then((count)=>{
             User.find({}).then((users)=>{
             res.render('post_list',{
@@ -68,7 +68,7 @@ if(req.user.role == 'Admin'){
          const author = articles.map((item)=>item.author)
             User.find({'_id._id':{$in:author}}).then((users)=>{
                  // fetch category from settings
-            Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+            Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
             res.render('post_list',{
                 articles:articles,
                 current:page,
@@ -105,7 +105,7 @@ router.post('/dashboard/update-profile',ensureAuthenticated,upload,(req,res)=>{
     user.bio = req.body.bio
     user.profile = req.file
 
-    User.updateOne({'_id._id':req.user._id.toString()},user).then(()=>{
+    User.updateOne({'_id':req.user._id.toString()},user).then(()=>{
         res.redirect('/admin/dashboard')
         req.flash('success','Profile Successfully Updated')
     }).catch((err)=>{if(err)console.log(err)})
@@ -113,7 +113,7 @@ router.post('/dashboard/update-profile',ensureAuthenticated,upload,(req,res)=>{
 })
 
 router.get('/dashboard/update-profile',ensureAuthenticated,(req,res)=>{
-    User.findOne({'_id._id':req.user._id.toString()}).then((user)=>{
+    User.findOne({'_id':req.user._id.toString()}).then((user)=>{
      // fetch category from settings
      Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
         res.render('update_profile',{
@@ -140,10 +140,10 @@ if(req.user.role == 'Admin'){
     .sort({createdAt:-1})
     .exec().then((articles)=>{
          // fetch category from settings
-         Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+         Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
         Article.countDocuments().then((count)=>{
             const author = articles.map((item)=>item.author)
-            User.find({'_id._id':{$in:author}}).then((users)=>{
+            User.find({'_id':{$in:author}}).then((users)=>{
             res.render('post_list',{
                 articles:articles,
                 current:page,
@@ -175,9 +175,9 @@ router.get('/dashboard/my-posts/page-:page',ensureAuthenticated,(req,res)=>{
     .sort({createdAt:-1})
     .exec().then((articles)=>{
          // fetch category from settings
-        Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+        Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
         Article.countDocuments({author:req.user._id.toString()}).then((count)=>{
-            User.find({'_id._id':req.user._id.toString()}).then((users)=>{
+            User.find({'_id':req.user._id.toString()}).then((users)=>{
             res.render('post_list',{
                 articles:articles,
                 current:page,

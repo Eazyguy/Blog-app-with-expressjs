@@ -17,7 +17,7 @@ let Settings = require('../models/settings')
 
 router.get('/add',ensureAuthenticated,(req,res)=>{
      // fetch category from settings
-     Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+     Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
     res.render('add_article',{
         title:'Add Post',
         category:setting.category
@@ -50,7 +50,7 @@ router.post('/add',ensureAuthenticated,upload,validation,(req,res)=>{
  let errors = validationResult(req)
 
  if(!errors.isEmpty()){
-    Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+    Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
     res.render('add_article',{
         errors:errors.array(),
         category:setting.category
@@ -59,7 +59,7 @@ router.post('/add',ensureAuthenticated,upload,validation,(req,res)=>{
 }else{
     article.save().then(()=>{
         
-        User.findOne({'_id._id':req.user._id.toString()}).then((user)=>{
+        User.findOne({'_id':req.user._id.toString()}).then((user)=>{
             const filTags = article.tags.filter((item)=>!user.tags.includes(item))
             const newTags = user.tags.concat(filTags)
             User.updateOne(user,{tags:newTags}).then(()=>{
@@ -78,7 +78,7 @@ router.post('/add',ensureAuthenticated,upload,validation,(req,res)=>{
 router.get('/:title/edit',ensureAuthenticated,(req,res)=>{
     Article.findOne(req.params).then((post)=>{
          // fetch category from settings
-         Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+         Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
         res.render('edit_post',{
             post:post,
             title:'Edit-'+req.params.title,
@@ -107,7 +107,7 @@ router.post('/:title/edit',ensureAuthenticated,upload,(req,res)=>{
 
     if(!errors.isEmpty()){
         // fetch category from settings
-        Settings.findOne({'_id._id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
+        Settings.findOne({'_id':'656f89ecca90516a2249ad0a'}).then((setting)=>{
        res.render('edit_Post',{
            errors:errors.array(),
            category:setting.category
@@ -116,7 +116,7 @@ router.post('/:title/edit',ensureAuthenticated,upload,(req,res)=>{
     }else{
     Article.findOne(req.params).then((post)=>{
     Article.updateOne(req.params,article).then(()=>{
-        User.findOne({'_id._id':req.user._id.toString()}).then((user)=>{
+        User.findOne({'_id':req.user._id.toString()}).then((user)=>{
             const filTags = post.tags.filter((item)=>!user.tags.includes(item))
             const newTags = user.tags.concat(filTags)
             User.updateOne(user,{tags:newTags}).then(()=>{
