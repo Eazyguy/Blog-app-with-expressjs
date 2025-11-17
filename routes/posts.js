@@ -143,7 +143,6 @@ router.delete('/:title',async(req,res)=>{
 
 Article.findOne(req.params).then((posts)=>{
     if(posts.author !== req.user._id && req.user.role !== 'Admin'){
-        console.log(req.user.role !== 'Admin')
         res.status(500).send()
     }else{
             if(posts.featured){
